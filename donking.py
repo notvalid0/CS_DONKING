@@ -96,14 +96,15 @@ while True:
 
             if left_scoreboard_number + right_scoreboard_number  == 0:
                 side = input("T to start Or CT to start")
-                if side == "T":
+                if side == "T" | side == "t":
                     print("T start")
                     number_1 = int(text_left.strip())
                     number_2 = int(text_right.strip())
-                elif side == "CT":
+                elif side == "CT" | side == "c" | side == "C" | side == "ct":
                     print("CT start")
                     number1 = int(text_right.strip())
                     number2 = int(text_left.strip())
+                else: print("Not A Valid Input, plz input again")
 
             if left_scoreboard_number + right_scoreboard_number <= 12:
                 print("识别数字 =", number_1)
