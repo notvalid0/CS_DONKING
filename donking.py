@@ -44,6 +44,8 @@ pygame.mixer.init()
 MP3_FILE = r"C:\Users\Public\Music\donk.mp3"
 pygame.mixer.music.load(MP3_FILE)
 
+side = None
+
 # 主循環
 while True:
     try:
@@ -94,7 +96,7 @@ while True:
             print("左侧计分板数字 =", left_scoreboard_number)
             print("右侧计分板数字 =", right_scoreboard_number)
 
-            if left_scoreboard_number + right_scoreboard_number  == 0:
+            if side == None and left_scoreboard_number + right_scoreboard_number  == 0:
                 side = input("T to start Or CT to start")
                 if side in ("T", "t"):
                     print("T start")
