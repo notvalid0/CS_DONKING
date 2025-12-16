@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from re import L
 import cv2
 import numpy as np
 import pytesseract
@@ -29,7 +28,7 @@ roi_width = 27
 roi_height = 27
 
 # OCR 计分板区域設置    
-l_scoreboard_x = 615
+l_scoreboard_x = 595
 l_scoreboard_y = 10
 l_scoreboard_width = 27
 l_scoreboard_height = 27
@@ -45,6 +44,12 @@ MP3_FILE = r"C:\Users\Public\Music\donk.mp3"
 pygame.mixer.music.load(MP3_FILE)
 
 side = None
+side = input("T to start Or CT to start")
+
+number = None
+number_1 = None
+number_2 = None
+
 
 # 主循環
 while True:
@@ -96,21 +101,21 @@ while True:
             print("左侧计分板数字 =", left_scoreboard_number)
             print("右侧计分板数字 =", right_scoreboard_number)
 
-            if side == None and left_scoreboard_number + right_scoreboard_number  == 0:
-                side = input("T to start Or CT to start")
+            if left_scoreboard_number + right_scoreboard_number  == 0:
                 if side in ("T", "t"):
                     print("T start")
                     number_1 = int(text_left.strip())
                     number_2 = int(text_right.strip())
                 elif side in ("CT", "ct", "C", "c"):
                     print("CT start")
-                    number1 = int(text_right.strip())
-                    number2 = int(text_left.strip())
+                    number_1 = int(text_right.strip())
+                    number_2 = int(text_left.strip())
                 else: print("Not A Valid Input, plz input again")
 
-            if left_scoreboard_number + right_scoreboard_number <= 12 and left_scoreboard_number + right_scoreboard_number > 0:
+            elif left_scoreboard_number + right_scoreboard_number <= 12 and left_scoreboard_number + right_scoreboard_number > 0:
                 print("识别数字 =", number_1)
                 number = number_1
+            
             elif left_scoreboard_number + right_scoreboard_number > 12:
                 print("识别数字 =", number_2)
                 number = number_2
