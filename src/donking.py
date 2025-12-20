@@ -15,30 +15,32 @@ except Exception as e:
     print("设置 Tesseract-OCR 路径出错:", e)
     traceback.print_exc()
 
-screen_width = 1280
-screen_height = 960
+# 读入用户输入
+screen_width = int(input("请输入屏幕宽度: (直接Enter默认1280)\n") or 1280)
+screen_height = int(input("请输入屏幕高度: (直接Enter默认960)\n") or 960)
 
-oi_width = 27
-oi_height = 27
+oi_width = int(27*(screen_width/1280))
+oi_height = int(27*(screen_height/960))
 
-scoreboard_width = 19
-scoreboard_height = 19
+scoreboard_width = int(19*(screen_width/1280))
+scoreboard_height = int(19*(screen_height/960))
 
 # OCR 左侧區域設置
-loi_x = 565
-loi_y = 10
+loi_x = int(565*(screen_width/1280))
+loi_y = int(10*(screen_height/960))
 
 # OCR 右侧區域設置
 roi_x = screen_width - loi_x - oi_width
 roi_y = loi_y
 
 # OCR 计分板左区域設置    
-l_scoreboard_x = 595
-l_scoreboard_y = 43
+l_scoreboard_x = int(595*(screen_width/1280))
+l_scoreboard_y = int(43*(screen_height/960))
 
 # OCR 计分板右区域設置
 r_scoreboard_x = screen_width - l_scoreboard_x - scoreboard_width
 r_scoreboard_y = l_scoreboard_y
+
 # 初始化
 pygame.mixer.init()
 MP3_FILE = r"C:\Users\Public\Music\donk.mp3"
@@ -46,7 +48,7 @@ try:
     pygame.mixer.music.load(MP3_FILE)
     print(f"音乐文件加载成功: {MP3_FILE}")
 except Exception as e:
-    print(f"音乐文件加载失败，请把音乐文件放于C:\Users\Public\Music\donk.mp3: {e}")
+    print(f"音乐文件加载失败，请把音乐文件放于{MP3_FILE}: {e}")
 
 side = None
 side = input("T to start Or CT to start   __\b\b\a")
@@ -107,13 +109,13 @@ while True:
             print("右侧计分板数字 =", right_scoreboard_number)
 
             if left_scoreboard_number + right_scoreboard_number == 0:
-                if side in ("T", "t"):
+                if side.lower() == "t":
                     print("T start")
                     number_1 = int(text_left.strip())
                     number_2 = int(text_right.strip())
                     # 游戏刚开始时，设置当前数字为number_1
                     number = number_1
-                elif side in ("CT", "ct", "C", "c"):
+                elif side.lower() in ("ct", "c"):
                     print("CT start")
                     number_1 = int(text_right.strip())
                     number_2 = int(text_left.strip())
