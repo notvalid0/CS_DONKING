@@ -15,36 +15,41 @@ except Exception as e:
     print("设置 Tesseract-OCR 路径出错:", e)
     traceback.print_exc()
 
+screen_width = 1280
+screen_height = 960
+
+oi_width = 27
+oi_height = 27
+
+scoreboard_width = 19
+scoreboard_height = 19
+
 # OCR 左侧區域設置
 loi_x = 565
 loi_y = 10
-loi_width = 27
-loi_height = 27
 
 # OCR 右侧區域設置
-roi_x = 665
-roi_y = 10
-roi_width = 27
-roi_height = 27
+roi_x = screen_width - loi_x - oi_width
+roi_y = loi_y
 
-# OCR 计分板区域設置    
+# OCR 计分板左区域設置    
 l_scoreboard_x = 595
-l_scoreboard_y = 10
-l_scoreboard_width = 27
-l_scoreboard_height = 27
+l_scoreboard_y = 43
 
-r_scoreboard_x = 625
-r_scoreboard_y = 10
-r_scoreboard_width = 27
-r_scoreboard_height = 27
-
+# OCR 计分板右区域設置
+r_scoreboard_x = screen_width - l_scoreboard_x - scoreboard_width
+r_scoreboard_y = l_scoreboard_y
 # 初始化
 pygame.mixer.init()
 MP3_FILE = r"C:\Users\Public\Music\donk.mp3"
-pygame.mixer.music.load(MP3_FILE)
+try:
+    pygame.mixer.music.load(MP3_FILE)
+    print(f"音乐文件加载成功: {MP3_FILE}")
+except Exception as e:
+    print(f"音乐文件加载失败，请把音乐文件放于C:\Users\Public\Music\donk.mp3: {e}")
 
 side = None
-side = input("T to start Or CT to start")
+side = input("T to start Or CT to start   __\b\b\a")
 
 number = None
 number_1 = None
@@ -55,13 +60,13 @@ number_2 = None
 while True:
     try:
         # 截图
-        screenshot_left = pyautogui.screenshot(region=(loi_x, loi_y, loi_width, loi_height))
+        screenshot_left = pyautogui.screenshot(region=(loi_x, loi_y, oi_width, oi_height))
         screenshot_left = cv2.cvtColor(np.array(screenshot_left), cv2.COLOR_RGB2GRAY)
-        screenshot_right = pyautogui.screenshot(region=(roi_x, roi_y, roi_width, roi_height))
+        screenshot_right = pyautogui.screenshot(region=(roi_x, roi_y, oi_width, oi_height))
         screenshot_right = cv2.cvtColor(np.array(screenshot_right), cv2.COLOR_RGB2GRAY)
-        r_scoreboard = pyautogui.screenshot(region=(r_scoreboard_x, r_scoreboard_y, r_scoreboard_width, r_scoreboard_height))
+        r_scoreboard = pyautogui.screenshot(region=(r_scoreboard_x, r_scoreboard_y, scoreboard_width, scoreboard_height))
         r_scoreboard = cv2.cvtColor(np.array(r_scoreboard), cv2.COLOR_RGB2GRAY)
-        l_scoreboard = pyautogui.screenshot(region=(l_scoreboard_x, l_scoreboard_y, l_scoreboard_width, l_scoreboard_height))
+        l_scoreboard = pyautogui.screenshot(region=(l_scoreboard_x, l_scoreboard_y, scoreboard_width, scoreboard_height))
         l_scoreboard = cv2.cvtColor(np.array(l_scoreboard), cv2.COLOR_RGB2GRAY)
 
         # 预处理
@@ -101,25 +106,30 @@ while True:
             print("左侧计分板数字 =", left_scoreboard_number)
             print("右侧计分板数字 =", right_scoreboard_number)
 
-            if left_scoreboard_number + right_scoreboard_number  == 0:
+            if left_scoreboard_number + right_scoreboard_number == 0:
                 if side in ("T", "t"):
                     print("T start")
                     number_1 = int(text_left.strip())
                     number_2 = int(text_right.strip())
+                    # 游戏刚开始时，设置当前数字为number_1
+                    number = number_1
                 elif side in ("CT", "ct", "C", "c"):
                     print("CT start")
                     number_1 = int(text_right.strip())
                     number_2 = int(text_left.strip())
-                else: print("Not A Valid Input, plz input again")
+                    # 游戏刚开始时，设置当前数字为number_1
+                    number = number_1
+                else: 
+                    print("Not A Valid Input, plz input again")
 
             elif left_scoreboard_number + right_scoreboard_number <= 12 and left_scoreboard_number + right_scoreboard_number > 0:
-                print("识别数字 =", number_1)
                 number = number_1
             
             elif left_scoreboard_number + right_scoreboard_number > 12:
-                print("识别数字 =", number_2)
                 number = number_2
 
+            print("当前识别到己方场上人数 =", number)
+            
             if number == 1:
                 if not pygame.mixer.music.get_busy():
                     print("▶ 播放音乐")
