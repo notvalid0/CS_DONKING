@@ -22,8 +22,8 @@ screen_height = int(input("请输入屏幕高度: (直接Enter默认960)\n") or 
 oi_width = int(27*(screen_width/1280))
 oi_height = int(27*(screen_height/960))
 
-scoreboard_width = int(19*(screen_width/1280))
-scoreboard_height = int(19*(screen_height/960))
+scoreboard_width = int(15*(screen_width/1280))
+scoreboard_height = int(21*(screen_height/960))
 
 # OCR 左侧區域設置
 loi_x = int(565*(screen_width/1280))
@@ -34,8 +34,8 @@ roi_x = screen_width - loi_x - oi_width
 roi_y = loi_y
 
 # OCR 计分板左区域設置    
-l_scoreboard_x = int(595*(screen_width/1280))
-l_scoreboard_y = int(43*(screen_height/960))
+l_scoreboard_x = int(614*(screen_width/1280))
+l_scoreboard_y = int(39*(screen_height/960))
 
 # OCR 计分板右区域設置
 r_scoreboard_x = screen_width - l_scoreboard_x - scoreboard_width
