@@ -10,7 +10,7 @@
 
 **基于Tesseract-OCR开发**
 
-### How To Use?
+## How To Use?
 
 1. 下载并安装[tesseract-ocr_w64-setup](https://github.com/UB-Mannheim/tesseract/wiki)文件，安装tesseract在E:/Tesseract文件夹[*]下
 
