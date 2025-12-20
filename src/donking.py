@@ -51,7 +51,18 @@ except Exception as e:
     print(f"音乐文件加载失败，请把音乐文件放于{MP3_FILE}: {e}")
 
 side = None
-side = input("T to start Or CT to start   __\b\b\a")
+sidenum = None
+while side is None:
+    side = input("T to start Or CT to start   __\b\b\a")
+    if (side.lower() == "t" ):
+        print("T start")
+        sidenum = 1
+    elif (side.lower() in ("ct", "c")):
+        print("CT start")
+        sidenum = 2
+    else:
+        print("Not A Valid Input, plz input again")
+        side = None
 
 number = None
 number_1 = None
@@ -108,25 +119,18 @@ while True:
             print("左侧计分板数字 =", left_scoreboard_number)
             print("右侧计分板数字 =", right_scoreboard_number)
 
-            if left_scoreboard_number + right_scoreboard_number == 0:
-                if side.lower() == "t":
-                    print("T start")
-                    number_1 = int(text_left.strip())
-                    number_2 = int(text_right.strip())
-                    # 游戏刚开始时，设置当前数字为number_1
-                    number = number_1
-                elif side.lower() in ("ct", "c"):
-                    print("CT start")
-                    number_1 = int(text_right.strip())
-                    number_2 = int(text_left.strip())
-                    # 游戏刚开始时，设置当前数字为number_1
-                    number = number_1
-                else: 
-                    print("Not A Valid Input, plz input again")
-
-            elif left_scoreboard_number + right_scoreboard_number <= 12 and left_scoreboard_number + right_scoreboard_number > 0:
+            if sidenum == 1:
+                number_1 = int(text_left.strip())
+                number_2 = int(text_right.strip())
                 number = number_1
-            
+            elif sidenum == 2:
+                number_1 = int(text_right.strip())
+                number_2 = int(text_left.strip())
+                number = number_1
+
+            # 设置Number
+            if left_scoreboard_number + right_scoreboard_number <= 12:
+                number = number_1
             elif left_scoreboard_number + right_scoreboard_number > 12:
                 number = number_2
 
