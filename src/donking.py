@@ -22,8 +22,8 @@ screen_height = int(input("请输入屏幕高度: (直接Enter默认960)\n") or 
 oi_width = int(27*(screen_width/1280))
 oi_height = int(27*(screen_height/960))
 
-scoreboard_width = int(15*(screen_width/1280))
-scoreboard_height = int(21*(screen_height/960))
+scoreboard_width = int(21*(screen_width/1280))
+scoreboard_height = int(24*(screen_height/960))
 
 # OCR 左侧區域設置
 loi_x = int(565*(screen_width/1280))
@@ -34,8 +34,8 @@ roi_x = screen_width - loi_x - oi_width
 roi_y = loi_y
 
 # OCR 计分板左区域設置    
-l_scoreboard_x = int(614*(screen_width/1280))
-l_scoreboard_y = int(39*(screen_height/960))
+l_scoreboard_x = int(612*(screen_width/1280))
+l_scoreboard_y = int(38*(screen_height/960))
 
 # OCR 计分板右区域設置
 r_scoreboard_x = screen_width - l_scoreboard_x - scoreboard_width
@@ -68,6 +68,7 @@ number = None
 number_1 = None
 number_2 = None
 
+score_num = None
 
 # 主循環
 while True:
@@ -119,23 +120,26 @@ while True:
             print("左侧计分板数字 =", left_scoreboard_number)
             print("右侧计分板数字 =", right_scoreboard_number)
 
-            if sidenum == 1:
-                number_1 = int(text_left.strip())
-                number_2 = int(text_right.strip())
-                number = number_1
-            elif sidenum == 2:
+            if sidenum == 1: #T
                 number_1 = int(text_right.strip())
                 number_2 = int(text_left.strip())
-                number = number_1
+            elif sidenum == 2: #CT
+                number_1 = int(text_left.strip())
+                number_2 = int(text_right.strip())
 
             # 设置Number
             if left_scoreboard_number + right_scoreboard_number <= 12:
-                number = number_1
+                score_num = 1
             elif left_scoreboard_number + right_scoreboard_number > 12:
+                score_num = 2
+
+            if score_num == 1:
+                number = number_1
+            elif score_num == 2:
                 number = number_2
 
             print("当前识别到己方场上人数 =", number)
-            
+
             if number == 1:
                 if not pygame.mixer.music.get_busy():
                     print("▶ 播放音乐")
