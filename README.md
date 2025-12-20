@@ -34,7 +34,7 @@
 
 4. 如需打包，可以`pip install pyinstaller` 后使用`pyinstaller--onefile xxx.py` 构建EXE文件 
 
-> ***需保证电脑有numpy, opencv-python, pytesseract库***
+> ***自行打包需保证电脑有numpy, opencv-python, pytesseract库***
 
 
 ## CHANGELOG
